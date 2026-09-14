@@ -1,7 +1,22 @@
 # 内镜麻醉无线监护文书系统 · 操作流程现场培训页面
 
+| | |
+|---|---|
+| 🌐 **在线访问** | <https://boe-endoscopy-training.netlify.app> （已加 noindex，不被搜索引擎收录） |
+| 📦 **仓库** | <https://github.com/streamy2008/Endoscopy-Anesthesia-Training> |
+| 🖨 **带走物** | 页面底部「一页速查卡」／顶栏「打印」按钮 |
+
 把原课件（`内镜麻醉无线监护文书系统操作流程.pptx`，21 页）重做成**可点、可练、可考**的单页培训应用。
 零依赖、无 CDN、无构建，双击 `index.html` 即用，适合培训室断网环境。
+
+## 重新发布
+
+```bash
+tools/deploy.sh                    # 白名单打包 → Netlify 生产发布 → 自动线上验收
+```
+
+或在 Netlify 后台把本项目连上 GitHub 仓库，之后 `git push` 即自动发布（二选一，别同时用，
+否则手工发布会下次 push 被覆盖）。
 
 ## 页面结构（一屏一事）
 
@@ -45,6 +60,8 @@ node tools/build-single.mjs        # → 京东方内镜培训-单文件版.html
 ```bash
 node tools/build-dist.mjs          # 生成白名单发布目录 dist/（只含 index.html + assets）
 netlify deploy --prod --dir=dist   # 部署到 Netlify
+# 或一步到位（含线上验收）：
+tools/deploy.sh
 ```
 
 > ⚠️ **发布目录必须是 `dist/`**。`assets/img-original/` 存放含患者信息的未脱敏原件（姓名 / 患者ID /

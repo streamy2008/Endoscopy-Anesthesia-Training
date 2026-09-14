@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内镜麻醉无线监护文书系统 · 操作流程现场培训</title>
+<meta name="description" content="内镜麻醉无线监护文书系统操作流程现场培训交互页面：角色分步实训、扫码绑定模拟器、流程排序挑战、情境判断题与结业考核。">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="readbar" id="readbar"></div>
+
+<!-- ============ 顶栏 ============ -->
+<header class="nav">
+  <button class="btn btn--icon" id="btn-menu" title="目录" aria-label="目录">☰</button>
+  <div class="nav__brand">
+    <span class="nav__mark">内</span>
+    <span>内镜麻醉无线监护文书系统</span>
+    <span class="nav__sub">操作流程 · 现场培训</span>
+  </div>
+  <div class="nav__spacer"></div>
+  <div class="nav__actions">
+    <button class="btn btn--sm" data-scale-btn="md" title="标准字号">A</button>
+    <button class="btn btn--sm" data-scale-btn="lg" title="放大字号">A+</button>
+    <button class="btn btn--sm" data-scale-btn="xl" title="超大字号（投影）">A++</button>
+    <button class="btn btn--sm btn--accent" id="btn-present" aria-pressed="false" title="讲师模式（P）">讲师模式</button>
+    <button class="btn btn--sm" id="btn-full" title="全屏（F）">全屏</button>
+    <button class="btn btn--sm" id="btn-print" title="打印">打印</button>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- ============ 侧栏 ============ -->
+  <aside class="side" id="side">
+    <nav id="side-nav"></nav>
+  </aside>
+
+  <!-- ============ 正文 ============ -->
+  <main class="main">
+
+    <!-- ---------- Hero ---------- -->
+    <div class="hero">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <span class="hero__eyebrow" id="hero-eyebrow"></span>
+          <h1 id="hero-title"></h1>
+          <div id="hero-sub" style="font-family:var(--font-mono);font-size:15px;color:var(--slate);letter-spacing:.5px;margin:-4px 0 16px"></div>
+          <p class="hero__lead" id="hero-lead"></p>
+          <div class="hero__cta">
+            <a class="btn btn--accent" href="#sec-flow">从全流程地图开始 →</a>
+            <a class="btn" href="#sec-sim">直接进扫码模拟器</a>
+            <a class="btn" href="#sec-quiz">结业考核（14 题）</a>
+          </div>
+          <div class="hero__stats" id="hero-stats"></div>
+        </div>
+
+        <!-- 产品示意：麻醉门诊业务流程时间轴（与真实文书同构，进场自动「走」一遍） -->
+        <aside class="hero__mock" id="hero-mock" aria-label="业务流程时间轴示意">
+          <div class="hero__mock-head">
+            <span class="badge badge--mono">麻醉门诊业务流程</span>
+            <span class="badge badge--ok">✓ 自动留痕</span>
+            <span style="flex:1"></span>
+            <button class="btn btn--sm btn--ghost" id="mock-replay" title="重播流程动画">↻ 重播</button>
+          </div>
+          <div class="hero__mock-body">
+            <div class="flowanim" id="flowanim">
+              <span class="flowanim__rail" aria-hidden="true"><i></i></span>
+              <span class="flowanim__dot" aria-hidden="true"></span>
+              <div class="tl__row" style="--i:0"><span class="tl__tick">✓</span><span><span class="tl__k">入室</span><br><span class="tl__v">2026-09-03 17:36 · 中继器扫床旁屏</span></span></div>
+              <div class="tl__row" style="--i:1"><span class="tl__tick">✓</span><span><span class="tl__k">麻醉开始</span><br><span class="tl__v">2026-09-03 18:17 · 术前确认 + 术前签名</span></span></div>
+              <div class="tl__row" style="--i:2"><span class="tl__tick">✓</span><span><span class="tl__k">麻醉结束</span><br><span class="tl__v">2026-09-03 18:19 · 麻醉医生确认</span></span></div>
+              <div class="tl__row" style="--i:3"><span class="tl__tick">✓</span><span><span class="tl__k">入复苏室</span><br><span class="tl__v">2026-09-03 18:41 · 扫复苏室床旁屏</span></span></div>
+              <div class="tl__row" style="--i:4"><span class="tl__tick">✓</span><span><span class="tl__k">出复苏室</span><br><span class="tl__v">2026-09-03 18:46 · Aldrete 10 分</span></span></div>
+            </div>
+          </div>
+          <div class="hero__mock-foot">
+            <span class="badge">5 个节点全部由扫码 / 签名自动生成</span>
+            <span class="badge">无需手工登记</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <!-- ---------- 01 认识设备（D3：删四大能力卡，只留图上交互） ---------- -->
+      <section data-sec id="sec-overview" data-label="认识设备">
+        <div class="sec-head">
+          <div class="kicker">01 / 先认设备</div>
+          <h2 class="sec-title">一套机器，六件东西</h2>
+          <p class="sec-lead">点图中编号，看它在流程里管什么、哪一步最容易出错。</p>
+        </div>
+        <div class="hw">
+          <div>
+            <div class="hw__stage" id="hw-stage"></div>
+          </div>
+          <div>
+            <div class="hw__list" id="hw-list"></div>
+            <div class="hw__detail" id="hw-detail"></div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr">
+
+      <!-- ---------- 02 全流程地图（D5：4 泳道 → 横向时间轴） ---------- -->
+      <section data-sec id="sec-flow" data-label="全流程地图">
+        <div class="sec-head">
+          <div class="kicker">02 / 全流程地图</div>
+          <h2 class="sec-title">十四步，一条线</h2>
+          <p class="sec-lead">点任意一步跳到该步演示；「播放巡演」按顺序自动走一遍。</p>
+        </div>
+        <div class="flowbar">
+          <button class="btn btn--accent" id="flow-play">▶ 播放全流程巡演</button>
+          <span class="badge badge--mono">每步 1.5 秒</span>
+        </div>
+        <div class="tlflow" id="tlflow">
+          <div class="tlflow__bar" id="tlflow-bar"><i></i></div>
+          <div class="tlflow__steps" id="tlflow-steps"></div>
+        </div>
+      </section>
+
+      <hr class="hr">
+
+      <!-- ---------- 03 角色实训 ---------- -->
+      <section data-sec id="sec-steps" data-label="角色实训">
+        <div class="sec-head">
+          <div class="kicker">03 / 角色分步实训</div>
+          <h2 class="sec-title">图上一一步步走</h2>
+          <p class="sec-lead">点「下一步」，聚光灯移到该点的地方；展开才看到全部文字步骤。</p>
+        </div>
+        <div class="roles" id="roletabs"></div>
+        <div id="steps"></div>
+      </section>
+
+      <hr class="hr">
+
+      <!-- ---------- 04 扫码模拟器 ---------- -->
+      <section data-sec id="sec-sim" data-label="扫码绑定模拟器">
+        <div class="sec-head">
+          <div class="kicker">04 / 动手练</div>
+          <h2 class="sec-title">扫码绑定与转床模拟器</h2>
+          <p class="sec-lead">不用连真实系统也能练：按提示依次操作左侧设备与床旁屏，右侧时间轴会像真实文书一样逐条生成业务节点。顺序做错会有提示，练到 11 个节点全部点亮即通关。现场可让学员上台实操，或点「自动演示」由讲师串讲。</p>
+        </div>
+        <div class="sim">
+          <div class="sim__stage">
+            <div class="sim__hint" id="sim-hint"></div>
+            <div class="tools" id="sim-tools"></div>
+            <div class="screen" id="sim-screen" style="margin-top:var(--s-md)"></div>
+            <div class="toast" id="sim-toast"></div>
+            <div style="display:flex;gap:8px;margin-top:var(--s-md);flex-wrap:wrap">
+              <button class="btn btn--primary btn--sm" id="sim-auto">▶ 自动演示</button>
+              <button class="btn btn--sm" id="sim-reset">↺ 重新开始</button>
+              <span class="badge badge--mono">11 个节点 · 顺序校验</span>
+            </div>
+          </div>
+          <div>
+            <div class="tl" id="sim-tl"></div>
+            <div class="callout callout--tip" style="margin-top:var(--s-md)">
+              <b>为什么顺序不能错：</b>文书时间轴上的每个节点都由具体动作触发 —— 先扫患者码才有身份，先扫中继器码才有设备归属，床旁屏扫码才产生「入室」。顺序错了，节点时间就会错，麻醉记录单与收费依据都会受影响。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr">
+
+      <!-- ---------- 05 排序挑战 ---------- -->
+      <section data-sec id="sec-sort" data-label="流程排序挑战">
+        <div class="sec-head">
+          <div class="kicker">05 / 动手练</div>
+          <h2 class="sec-title">流程排序挑战（10 步）</h2>
+          <p class="sec-lead">把打乱的 10 个关键动作拖成正确顺序 —— 这是现场培训最有效的「以为会了」检测器。拖动条目排序；触屏或不便拖动时用条目右侧的 ↑ ↓ 按钮。</p>
+        </div>
+        <div class="grid grid--2" style="align-items:start">
+          <div>
+            <ol class="sortlist" id="sortlist"></ol>
+            <div style="display:flex;gap:8px;margin-top:var(--s-md);flex-wrap:wrap">
+              <button class="btn btn--primary btn--sm" id="sort-check">提交批改</button>
+              <button class="btn btn--sm" id="sort-reset">↺ 重新打乱</button>
+              <button class="btn btn--sm btn--ghost" id="sort-hint">看口诀提示</button>
+            </div>
+          </div>
+          <div>
+            <div id="sort-result"></div>
+            <div class="card" style="margin-top:var(--s-md)">
+              <h4 style="margin-top:0">现场带教建议</h4>
+              <p style="font-size:14px;color:var(--steel);margin:0">分组抢答：每组派一人上来排 3 步，交接给下一位，接力完成 10 步。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr">
+
+      <!-- ---------- 06 考核（D2：判断题已并入，10 → 14 题） ---------- -->
+      <section data-sec id="sec-quiz" data-label="结业考核">
+        <div class="sec-head">
+          <div class="kicker">06 / 结业考核</div>
+          <h2 class="sec-title">结业考核 · 14 题</h2>
+          <p class="sec-lead">交卷后逐题给解析，成绩可打印留存。</p>
+        </div>
+        <div id="score"></div>
+        <div id="quiz"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn--accent" id="quiz-submit">✓ 交卷并查看解析</button>
+          <button class="btn" id="quiz-print">打印成绩单</button>
+        </div>
+      </section>
+
+      <hr class="hr">
+
+      <!-- ---------- 07 速查卡（D6：移出导航，只保留打印入口） ---------- -->
+      <section data-sec id="sec-card" data-print="1" data-label="一页速查卡">
+        <div class="sec-head">
+          <div class="kicker">07 / 带走物</div>
+          <h2 class="sec-title">一页速查卡</h2>
+          <p class="sec-lead">打印出来贴在检查间、复苏室或门诊工位。顶栏「打印」按钮直接出这一页。</p>
+        </div>
+        <div style="margin-bottom:var(--s-md)">
+          <button class="btn btn--primary" id="card-print">🖨 打印速查卡</button>
+        </div>
+        <div id="cardwrap"></div>
+      </section>
+
+    </div>
+
+    <footer class="foot">
+      <div class="wrap">
+        <span id="foot-meta"></span>
+        <span class="spacer"></span>
+        <span class="mono noprint">快捷键：← → 章节翻页 ｜ P 讲师模式 ｜ F 全屏 ｜ 滚轮缩放</span>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- ============ 讲师模式悬浮条 ============ -->
+<div class="presenter" id="presenter">
+  <span class="p-time" id="p-time">00:00</span>
+  <span class="p-sec" id="p-sec"></span>
+  <button class="btn btn--sm" id="p-prev">← 上一章</button>
+  <button class="btn btn--sm" id="p-next">下一章 →</button>
+  <button class="btn btn--sm" id="p-menu">目录</button>
+  <button class="btn btn--sm" id="p-exit">退出讲师模式</button>
+</div>
+
+<!-- ============ 灯箱 ============ -->
+<div class="lb" id="lb">
+  <div class="lb__bar">
+    <span class="lb__title" id="lb-title"></span>
+    <span class="lb__meta" id="lb-meta"></span>
+    <span class="spacer"></span>
+    <button class="btn btn--sm" id="lb-out">－ 缩小</button>
+    <button class="btn btn--sm" id="lb-in">＋ 放大</button>
+    <button class="btn btn--sm" id="lb-fit">1:1</button>
+    <button class="btn btn--sm btn--accent" id="lb-close">关闭 (Esc)</button>
+  </div>
+  <div class="lb__stage" id="lb-stage"><img id="lb-img" alt="操作截图放大查看"></div>
+  <div class="lb__tip">滚轮缩放 · 按住拖动查看细节 · 点击空白处或按 Esc 关闭</div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

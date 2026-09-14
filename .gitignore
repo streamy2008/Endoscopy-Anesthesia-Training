@@ -1,0 +1,24 @@
+# ── 绝不能入库 / 绝不能发布 ──────────────────────────────
+# 含真实患者信息（姓名 / 患者ID / 电话 / 证件号 / 二维码 / 腕带条码）的未脱敏原件
+assets/img-original/
+
+# 厂商原始课件（非本项目产物）
+*.pptx
+
+# Netlify CLI 本地状态
+.netlify/
+
+# 发布产物（由 tools/build-dist.mjs 生成）
+dist/
+
+# 单文件版是构建产物，用 node tools/build-single.mjs 可随时重建
+京东方内镜培训-单文件版.html
+
+# 系统与临时文件
+.DS_Store
+*.log
+
+# Python 字节码缓存
+tools/__pycache__/
+__pycache__/
+*.pyc

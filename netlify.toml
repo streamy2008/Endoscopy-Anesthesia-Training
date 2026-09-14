@@ -1,0 +1,20 @@
+# Netlify 部署配置
+# 注意：publish 必须是 dist/（由 tools/build-dist.mjs 白名单生成），
+# 绝不指向项目根 —— 根目录下有 assets/img-original/（未脱敏患者信息原件）。
+
+[build]
+  publish = "dist"
+  command = "node tools/build-dist.mjs"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
